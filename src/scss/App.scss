@@ -1,10 +1,11 @@
 //config
-@import 'config/mixins';
-@import 'config/normalize';
-@import 'config/vars';
+@import "config/mixins";
+@import "config/normalize";
+@import "config/vars";
 //layout
-@import 'layout/adjustments';
-@import 'layout/base';
+@import "layout/adjustments";
+@import "layout/base";
 //components {
-@import 'login';
-@import 'header';
+@import "login";
+@import "header";
+@import "map";

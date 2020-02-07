@@ -1,6 +1,6 @@
-// media 
+// media
 @function rem($px) {
-    @return $px / 16px+rem;
+    @return $px / 16px + rem;
 }
 
 @mixin desktop {

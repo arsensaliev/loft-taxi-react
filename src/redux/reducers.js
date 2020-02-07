@@ -5,47 +5,92 @@ import {
     fetchProfileFailure,
     fetchProfileRequest,
     fetchProfileSuccess,
+    fetchAddressRequest,
+    fetchAddressSuccess,
+    fetchAddressFailure,
+    fetchRouteRequest,
+    fetchRouteSuccess,
+    fetchRouteFailure,
+    cancelOrder,
     logoutAction
 } from "./actions";
 
-import { handleActions } from 'redux-actions';
+import { handleActions } from "redux-actions";
 import { combineReducers } from "redux";
 
-const isLoggedIn = handleActions({
-    [fetchAuthSuccess]: () => true,
-    [logoutAction]: () => false
+const isLoggedIn = handleActions(
+    {
+        [fetchAuthSuccess]: () => true,
+        [logoutAction]: () => false
+    },
+    false
+);
 
-}, false);
+const pending = handleActions(
+    {
+        [fetchAuthRequest]: () => true,
+        [fetchAuthSuccess]: () => false,
+        [fetchAuthFailure]: () => false,
+        [fetchProfileRequest]: () => true,
+        [fetchProfileSuccess]: () => false,
+        [fetchProfileFailure]: () => false,
+        [fetchAddressRequest]: () => true,
+        [fetchAddressSuccess]: () => false,
+        [fetchAddressFailure]: () => false,
+        [fetchRouteRequest]: () => true,
+        [fetchRouteSuccess]: () => false,
+        [fetchRouteFailure]: () => false
+    },
+    false
+);
 
-const pending = handleActions({
-    [fetchAuthRequest]: () => true,
-    [fetchAuthSuccess]: () => false,
-    [fetchAuthFailure]: () => false,
-    [fetchProfileRequest]: () => true,
-    [fetchProfileSuccess]: () => false,
-    [fetchProfileFailure]: () => false
-}, false);
+const profile = handleActions(
+    {
+        [fetchProfileSuccess]: (state, action) => action.payload,
+        [logoutAction]: () => null
+    },
+    null
+);
 
-const profile = handleActions({
-    [fetchProfileSuccess]: (state, action) => action.payload
-}, {
-    cardNumber: '',
-    cardName: '',
-    expiryDate: '',
-    cvc: '',
-    token: ''
-});
+const error = handleActions(
+    {
+        [fetchAuthRequest]: () => true,
+        [fetchAuthSuccess]: () => false,
+        [fetchAuthFailure]: () => false,
+        [fetchProfileRequest]: () => true,
+        [fetchProfileSuccess]: () => false,
+        [fetchProfileFailure]: () => false,
+        [fetchAddressRequest]: () => true,
+        [fetchAddressSuccess]: () => false,
+        [fetchAddressFailure]: () => false
+    },
+    null
+);
 
-const error = handleActions({
-    [fetchAuthFailure]: (state, action) => action.payload,
-    [fetchProfileFailure]: (state, action) => action.payload,
-    [fetchAuthRequest]: () => null,
-    [fetchProfileRequest]: () => null
-}, null);
+const address = handleActions(
+    {
+        [fetchAddressSuccess]: (state, action) => action.payload,
+        [logoutAction]: (state, action) => null
+    },
+    null
+);
 
+const route = handleActions(
+    {
+        [fetchRouteSuccess]: (state, action) => action.payload,
+        [cancelOrder]: (state, action) => action.payload,
+        [logoutAction]: (state, action) => null
+    },
+    {
+        status: false,
+        coordinates: null
+    }
+);
 export default combineReducers({
     isLoggedIn,
     pending,
     profile,
+    address,
+    route,
     error
 });

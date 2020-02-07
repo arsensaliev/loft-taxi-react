@@ -1,29 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter} from 'react-router-dom';
-import { Provider } from 'react-redux';
-import './index.css';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import "./index.css";
+import App from "./App";
 import createAppStore from "./store";
 import { saveStorage } from "./localstorage";
 
 let store = createAppStore();
 
-store.subscribe(()=> {
-        saveStorage({
-            isLoggedIn: store.getState().isLoggedIn,
-            profile: store.getState().profile
-        })
-    }
-);
+store.subscribe(() => {
+    saveStorage({
+        isLoggedIn: store.getState().isLoggedIn,
+        profile: store.getState().profile,
+        address: store.getState().address
+    });
+});
 
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
-            <App data-testid="App"/>
+            <App data-testid="App" />
         </BrowserRouter>
     </Provider>,
-    document.getElementById('root')
+    document.getElementById("root")
 );
-
-
