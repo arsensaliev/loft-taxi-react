@@ -22,12 +22,21 @@
 
 @keyframes slidein {
     from {
-        left: -2000px
+        left: -2000px;
     }
     90% {
         left: 52%;
     }
     to {
         left: 50%;
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
     }
 }
