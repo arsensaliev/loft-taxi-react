@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
 import { logoutAction } from "../../../redux/actions";
 import { useDispatch } from "react-redux";
 
 const HeaderMenu = () => {
     const dispatch = useDispatch();
-    const handleClick = e => {
+    const handleClick = useCallback(e => {
         e.preventDefault();
         localStorage.clear();
         dispatch(logoutAction());
-    };
+    },[dispatch]);
 
     return (
         <ul className="header__menu">
