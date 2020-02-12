@@ -12,9 +12,9 @@ export const profileSuccess = "SAVE_PROFILE_SUCCESS";
 export const profileFailure = "SAVE_PROFILE_FAILURE";
 
 //address list
-export const addressListRequest = `FETCH_ADDRESS_REQUEST`;
-export const addressListSuccess = `FETCH_ADDRESS_SUCCESS`;
-export const addressListFailure = `FETCH_ADDRESS_FAILURE`;
+export const addressListRequest = "FETCH_ADDRESS_REQUEST";
+export const addressListSuccess = "FETCH_ADDRESS_SUCCESS";
+export const addressListFailure = "FETCH_ADDRESS_FAILURE";
 
 //route
 export const routeRequest = "FETCH_ROUTE_REQUEST";

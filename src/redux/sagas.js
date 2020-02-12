@@ -45,10 +45,8 @@ const routeRequest = data =>
 function* authorizationSaga() {
     while (true) {
         const action = yield take(fetchAuthRequest);
-        console.log(action);
         try {
             const result = yield call(authRequest, action.payload);
-            console.log(result);
             result.success
                 ? yield put(fetchAuthSuccess(result))
                 : yield put(fetchAuthFailure(result));
@@ -76,7 +74,6 @@ function* addressListSaga() {
     yield takeEvery(fetchAddressRequest, function*() {
         try {
             const result = yield call(addressListRequest);
-            console.log(result.addresses);
             yield put(fetchAddressSuccess(result.addresses));
         } catch (e) {
             yield put(fetchAddressFailure(e));
@@ -89,7 +86,6 @@ function* routeSaga() {
         const action = yield take(fetchRouteRequest);
         try {
             const result = yield call(routeRequest, action.payload);
-            console.log(result);
             yield put(fetchRouteSuccess({ status: true, coordinates: result }));
         } catch (e) {
             yield put(fetchRouteFailure(e));
