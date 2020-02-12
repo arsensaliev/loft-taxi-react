@@ -79,7 +79,12 @@ const route = handleActions(
     {
         [fetchRouteSuccess]: (state, action) => action.payload,
         [cancelOrder]: (state, action) => action.payload,
-        [logoutAction]: (state, action) => null
+        [logoutAction]: (state, action) => {
+            return {
+                status: false,
+                coordinates: null
+            };
+        }
     },
     {
         status: false,
