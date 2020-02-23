@@ -2,12 +2,14 @@ import React, { useCallback, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { fetchAuthRequest } from "../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
 
 const LoginForm = () => {
     const history = useHistory();
     const state = useSelector(state => state);
     const dispatch = useDispatch();
     const [inputData, setData] = useState({ email: "", password: "" });
+    const { register, handleSubmit } = useForm();
     const handleChange = useCallback(
         ({ target }) => {
             setData({ ...inputData, [target.name]: target.value });
@@ -15,9 +17,8 @@ const LoginForm = () => {
         [inputData]
     );
 
-    const handleSubmit = useCallback(
+    const onSubmit = useCallback(
         e => {
-            e.preventDefault();
             dispatch(
                 fetchAuthRequest({
                     email: inputData.email,
@@ -36,7 +37,7 @@ const LoginForm = () => {
         <form
             action=""
             method=""
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             className="form"
             id="loginForm"
             data-testid="LoginForm"
@@ -56,6 +57,7 @@ const LoginForm = () => {
                     value={inputData.email}
                     data-testid="login-field"
                     onChange={handleChange}
+                    ref={register}
                     required
                 />
             </div>
@@ -70,6 +72,7 @@ const LoginForm = () => {
                     value={inputData.password}
                     data-testid="password-field"
                     onChange={handleChange}
+                    ref={register}
                     required
                 />
             </div>
