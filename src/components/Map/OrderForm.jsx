@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import { cancelOrder, fetchRouteRequest } from "../../redux/actions";
+import { useForm, Controller } from "react-hook-form";
 
 const customStyle = {
     control: provided => ({
@@ -25,9 +26,8 @@ export const OrderForm = () => {
     const availableOptions = options.filter(
         option => ![addressOne, addressTwo].includes(option.label)
     );
-
-    const handleSubmit = e => {
-        e.preventDefault();
+    const { control, handleSubmit } = useForm();
+    const onSubmit = e => {
         dispatch(
             fetchRouteRequest({
                 address1: addressOne,
@@ -38,16 +38,16 @@ export const OrderForm = () => {
     };
 
     const handleAddressOne = useCallback(
-        e => {
-            const value = e ? e.value : null;
+        ([selected]) => {
+            const value = selected ? selected.value : null;
             setAddressOne(value);
         },
         [setAddressOne]
     );
 
     const handleAddressTwo = useCallback(
-        e => {
-            const value = e ? e.value : null;
+        ([selected]) => {
+            const value = selected ? selected.value : null;
             setAddressTwo(value);
         },
         [setAddressTwo]
@@ -81,9 +81,10 @@ export const OrderForm = () => {
                     </button>
                 </>
             ) : (
-                <form action="" method="" onSubmit={handleSubmit}>
+                <form action="" method="" onSubmit={handleSubmit(onSubmit)}>
                     <div className="address__group">
-                        <Select
+                        <Controller
+                            as={<Select />}
                             className="address__input"
                             options={availableOptions}
                             styles={customStyle}
@@ -92,8 +93,12 @@ export const OrderForm = () => {
                             isClearable
                             isSearchable
                             noOptionsMessage={() => "Введите корректный адрес"}
+                            name="addressOne"
+                            control={control}
+                            defaultValue=""
                         />
-                        <Select
+                        <Controller
+                            as={<Select />}
                             className="address__input"
                             options={availableOptions}
                             styles={customStyle}
@@ -102,6 +107,9 @@ export const OrderForm = () => {
                             isClearable
                             isSearchable
                             noOptionsMessage={() => "Введите корректный адрес"}
+                            name="addressTwo"
+                            control={control}
+                            defaultValue=""
                         />
                     </div>
                     <input
